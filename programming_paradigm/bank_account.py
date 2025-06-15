@@ -1,37 +1,36 @@
 class BankAccount:
-    """A simple bank account class."""
-
     def __init__(self, initial_balance=0):
-        """Initialize the account with a balance."""
-        self.account_balance = initial_balance
+        self.__account_balance = initial_balance  # Private attribute
 
     def deposit(self, amount):
-        """Add the specified amount to the account balance."""
-        self.account_balance += amount
+        if amount > 0:
+            self.__account_balance += amount
+        else:
+            print("Deposit amount must be positive.")
 
     def withdraw(self, amount):
-        """Withdraw amount if funds are sufficient, else return False."""
-        if amount <= self.account_balance:
-            self.account_balance -= amount
+        if amount <= self.__account_balance:
+            self.__account_balance -= amount
             return True
-        return False
+        else:
+            return False
 
     def display_balance(self):
-        """Display the current balance."""
-        print(f"Current Balance: ${self.account_balance:.2f}")
+        print(f"Current Balance: ${self.__account_balance}")
 import sys
 from bank_account import BankAccount
 
 def main():
-    account = BankAccount(100)  # Initial balance is $100
+    account = BankAccount(100)  # Starting with a balance of $100
 
     if len(sys.argv) < 2:
         print("Usage: python main-0.py <command>:<amount>")
         print("Commands: deposit, withdraw, display")
         sys.exit(1)
 
-    command, *params = sys.argv[1].split(':')
-    amount = float(params[0]) if params else None
+    parts = sys.argv[1].split(':')
+    command = parts[0]
+    amount = float(parts[1]) if len(parts) > 1 else None
 
     if command == "deposit" and amount is not None:
         account.deposit(amount)
