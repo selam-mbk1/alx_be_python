@@ -2,7 +2,7 @@
 
 class BankAccount:
     def __init__(self, initial_balance=0):
-        self.__account_balance = initial_balance  # encapsulated with __
+        self.__account_balance = initial_balance  # Encapsulated attribute
 
     def deposit(self, amount):
         if amount > 0:
@@ -30,8 +30,9 @@ def main():
         print("Commands: deposit, withdraw, display")
         sys.exit(1)
 
-    command, *params = sys.argv[1].split(':')
-    amount = float(params[0]) if params else None
+    command_input = sys.argv[1].split(':')
+    command = command_input[0]
+    amount = float(command_input[1]) if len(command_input) > 1 else None
 
     if command == "deposit" and amount is not None:
         account.deposit(amount)
